@@ -4,7 +4,7 @@
   "description": "See README.md\u001b[D\u001b[C for a Description\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[3~d",
   "main": "index.js",
   "scripts": {
-    "test": "start-dev"
+    "build": "gulp build"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,19 @@
   "bugs": {
     "url": "https://github.com/kahmannf/online-recipe-manager/issues"
   },
-  "homepage": "https://github.com/kahmannf/online-recipe-manager#readme"
+  "homepage": "https://github.com/kahmannf/online-recipe-manager#readme",
+  "dependencies": {
+    "browserify": "^14.1.0",
+    "cookie-parser": "^1.4.3",
+    "crypto": "0.0.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "mysql": "^2.13.0",
+    "vue": "^2.2.6",
+    "vueify": "^9.4.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
 }
