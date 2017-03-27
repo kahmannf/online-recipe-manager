@@ -1,0 +1,19 @@
+{
+  "name": "online-recipe-manager",
+  "version": "0.0.1",
+  "description": "See README.md\u001b[D\u001b[C for a Description\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[1;5D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[3~d",
+  "main": "index.js",
+  "scripts": {
+    "test": "start-dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kahmannf/online-recipe-manager.git"
+  },
+  "author": "Felix Kahmann",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kahmannf/online-recipe-manager/issues"
+  },
+  "homepage": "https://github.com/kahmannf/online-recipe-manager#readme"
+}
