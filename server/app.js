@@ -3,6 +3,8 @@ const express = require('express');
 const router = require('./router');
 const config = require('./config');
 
+const bodyParser = require('body-parser');
+
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
@@ -16,6 +18,7 @@ app.use('/', (req, res, next) => {
 });
 
 app.use(express.static('./public'));
+app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session(config.session));
 

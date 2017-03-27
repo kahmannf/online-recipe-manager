@@ -31,13 +31,13 @@ router.get('/all', (req, res) => {
 //
 //  0       Sucessful Login
 //
-//  1       Invalid username/password combination
+//  1       Invalid email/password combination
 //  2       User not Registered
 //
 //  3       Invalid Data
 //
 router.post('/login', (req, res) => {
-    var sql = 'select * from users where username like \'' + req.query.username + '\'';
+    var sql = 'select * from users where email like \'' + req.query.email + '\'';
     db.getitems(sql, (err, rows, fields) => {
         if (err) {
             db.handleDBerror(err, res);

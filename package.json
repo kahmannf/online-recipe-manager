@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/kahmannf/online-recipe-manager#readme",
   "dependencies": {
+    "body-parser": "^1.17.1",
     "browserify": "^14.1.0",
     "cookie-parser": "^1.4.3",
     "crypto": "0.0.3",
