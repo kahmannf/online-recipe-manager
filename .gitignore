@@ -17,3 +17,6 @@ public/dist/*.css
 # Dependency directories
 node_modules
 jspm_packages
+
+#VS CODE
+.vscode
