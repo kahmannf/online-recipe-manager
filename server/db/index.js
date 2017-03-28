@@ -1,14 +1,17 @@
+'use strict';
 const mysql = require('mysql');
 const config = require('../config');
 
 const pool = mysql.createPool(config.mysql);
 
 module.exports = {
-    /*
+    
+    /**
+    * @function gets objects from the db based on the sql
     * @param {string} sql
-    * @param {function(err, result, fields)} callback
+    * @callback queryCallback
     */
-    getitems: (sql, callback) => {
+    executesql: (sql, callback) => {
         pool.getConnection((err, connection) => {
             if (err)
             {
@@ -23,32 +26,13 @@ module.exports = {
                 return;
             });
         });
-    },
-    handleDBerror: (err, res) => {
-        if (config.server.loglevel > 999) {
-            console.log(err);
-        }
-
-        if (config.server.client_error_notification == 1) {
-            res.status(500).send(err);
-        }
-        else {
-            res.status(500).send('Error');
-        }
-    },
-    executesql: (sql, res) => {
-        pool.getConnection((err, connection) => {
-            if (err) {
-                handleDBerror(err, res);
-                return;
-            }
-
-            connection.query(sql, (err, rows, fields) => {
-                connection.release();
-
-                res.json({ rows, fields });
-                return;
-            });
-        });
     }
+
+    /**
+    * This callback handles the end of a Database Query
+    * @callback queryCallback
+    * @param {IError} err represents a error of a non-sucessful operation
+    * @param {any} rows represents the rows of a sucessful operation
+    * @param {IFieldInfo[]} fields represents the fileds of the db table
+    */
 }

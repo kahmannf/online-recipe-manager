@@ -1,3 +1,4 @@
+'use strict';
 module.exports = {
     port: process.env.SERVER_PORT,
     log_incoming_requests: process.env.LOG_INCOMING_REQUSTS,

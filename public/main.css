@@ -1,0 +1,70 @@
+html {
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.column {
+  float: left;
+}
+
+.row {
+    width: 99%;
+    background-color: rgba(255, 255, 255, 1);
+    margin: 0 auto;
+    padding: 10px 0;
+}
+
+.row:after, .row:before {
+  content: " ";
+  display: table;
+}
+
+.row:after {
+  clear: both;
+}
+
+.column-12 {
+  width: 100%;
+}
+
+.column-8 {
+    width: 66.66%;
+}
+
+.column-6 {
+  width: 50%;
+}
+
+.column-5 {
+    width: 41.66%;
+}
+
+.column-4 {
+  width: 33.3%;
+}
+
+.column-3 {
+  width: 25%;
+}
+
+.column-2 {
+  width: 16.67%;
+}
+
+.column-1 {
+  width: 8.33%;
+}
+
+.grey-border {
+    border-width: 4px;
+    border-color: lightgray;
+    border-style: solid;
+}
+
+input {
+    width: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
