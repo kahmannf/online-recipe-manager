@@ -127,8 +127,8 @@ router.get('/byregisterkey/:registerkey', (req, res) => {
         if (!req.registerkey) {
             res.status(400).send('Register key required');
         }
-        var user = new user();
-        user.load_by_registerkey((err, status, user) => {
+        var requser = new user();
+        requser.load_by_registerkey((err, status, requser) => {
             if (err) {
                 throw err;
             }
@@ -137,7 +137,7 @@ router.get('/byregisterkey/:registerkey', (req, res) => {
                 res.status(900).send('no user found for that key');
             }
 
-            res.status(200).json(user);
+            res.status(200).json(requser);
             return;
         });
     }
@@ -147,7 +147,7 @@ router.get('/byregisterkey/:registerkey', (req, res) => {
             return;
         }
         else {
-            res.status(500).send('Inteernal server error');
+            res.status(500).send('Internal server error');
             return;
         }
     }

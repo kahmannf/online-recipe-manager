@@ -20,7 +20,7 @@
                 <div class="column column-2">&nbsp;</div>
 
                 <div class="column column-6">
-                    <input contenteditable="false" class="clear" type="text" v-model="email">
+                    <label class="clear" type="text" v-model="email"></label>
                 </div>
             </div>
             <div class="row">
@@ -33,7 +33,7 @@
                 <div class="column column-2">&nbsp;</div>
 
                 <div class="column column-6">
-                    <input contenteditable="false" class="clear" type="text" v-model="alias">
+                    <label class="clear" type="text" v-model="alias"></label>
                 </div>
             </div>
             <div class="row">
@@ -46,7 +46,7 @@
                 <div class="column column-2">&nbsp;</div>
 
                 <div class="column column-6">
-                    <input contenteditable="false" class="clear" type="text" v-model="password">
+                    <input class="clear" type="text" v-model="password">
                 </div>
             </div>
             <div class="row">

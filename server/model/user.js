@@ -3,7 +3,6 @@ const uuid = require('uuid/v4');
 const db = require('../db');
 
 /**
- * @class
  * @constructor Creates a new user with a new guid.
  */
 function user()

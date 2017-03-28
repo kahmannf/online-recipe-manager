@@ -1,4 +1,5 @@
-module.exports = {
+const Vue = require('vue');
+module.exports = new Vue({
     data() {
         return {
             email: '',
@@ -10,19 +11,39 @@ module.exports = {
         }
     },
     methods: {
-        load_userinfo: function () {
+        created: function () {
 
             this.response_message = 'Loading user data... Please wait';
             this.response_color = 'black';
 
+            var urlparams = function(){
+                var assoc  = {};
+                var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+                var queryString = location.search.substring(1); 
+                var keyValues = queryString.split('&'); 
+
+                for(var i in keyValues) { 
+                    var key = keyValues[i].split('=');
+                    if (key.length > 1) {
+                    assoc[decode(key[0])] = decode(key[1]);
+                    }
+                } 
+
+                return assoc; 
+            };
+
             var req = new XMLHttpRequest();
-            var path = '/user/byregisterkey';
-            req.open("POST", path, true);
+            var path = '/user/byregisterkey/' + urlparams()['key'];
+
+
+            req.open("GET", path, true);
             req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             req.onreadystatechange = () => {
                 if (req.readyState === 4 && req.status == 200) {
                 }
             }
+
+            req.send();
         },
         send_request: function () {
             try {
@@ -48,4 +69,4 @@ module.exports = {
             }
         }
     }
-}
+});
