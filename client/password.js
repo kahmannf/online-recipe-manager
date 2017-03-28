@@ -40,6 +40,11 @@ module.exports = new Vue({
             req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             req.onreadystatechange = () => {
                 if (req.readyState === 4 && req.status == 200) {
+                    this.response_message = 'Your account was sucessful validated';
+                }
+
+                else if (req.readyState === 4){
+                    this.response_message = req.responseText;
                 }
             }
 
