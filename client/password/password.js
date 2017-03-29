@@ -5,15 +5,15 @@ module.exports = new Vue({
             email: '',
             alias: '',
             registerkey: '',
-            response_message: 'Please enter your credentials',
+            response_message: 'Bitte gib deine Daten ein:',
             response_color: 'black',
             password: '',
         }
     },
     methods: {
-        created: function () {
+        mounted: function () {
 
-            this.response_message = 'Loading user data... Please wait';
+            this.response_message = 'Lade Nutzerdaten ... bitte warten';
             this.response_color = 'black';
 
             var urlparams = function(){
@@ -40,7 +40,7 @@ module.exports = new Vue({
             req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             req.onreadystatechange = () => {
                 if (req.readyState === 4 && req.status == 200) {
-                    this.response_message = 'Your account was sucessful validated';
+                    this.response_message = 'Dein Account wurde erfolreich erstellt.';
                 }
 
                 else if (req.readyState === 4){
@@ -53,7 +53,7 @@ module.exports = new Vue({
         send_request: function () {
             try {
 
-                this.response_message = 'Sending registration-request to the server';
+                this.response_message = 'Sende anfrage an den Server...';
                 this.response_color = 'black';
 
                 var req = new XMLHttpRequest();

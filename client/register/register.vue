@@ -20,7 +20,7 @@
                 <div class="column column-2">&nbsp;</div>
 
                 <div class="column column-6">
-                    <label class="clear" type="text" v-model="email"></label>
+                    <input class="clear" type="text" v-model="email">
                 </div>
             </div>
             <div class="row">
@@ -33,27 +33,14 @@
                 <div class="column column-2">&nbsp;</div>
 
                 <div class="column column-6">
-                    <label class="clear" type="text" v-model="alias"></label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="column column-1">&nbsp;</div>
-
-                <div class="column column-2">
-                    <label :class="alias_color">Alias/Forumname:</label>
-                </div>
-
-                <div class="column column-2">&nbsp;</div>
-
-                <div class="column column-6">
-                    <input class="clear" type="text" v-model="password">
+                    <input class="clear" type="text" v-model="alias">
                 </div>
             </div>
             <div class="row">
                 <div class="column column-5">&nbsp;</div>
 
                 <div class="column column-6">
-                    <button @click="send_request" style="width:100%;">Set password</button>
+                    <button @click="send_request" style="width:100%;">Send me a registration-email</button>
                 </div>
             </div>
 
@@ -61,8 +48,8 @@
     </div>
 </template>
 
-<script src="password.js"></script>
-<style src="../public/main.css"></style>
+<script src="register.js"></script>
+<style src="../../public/main.css"></style>
 
 <style scoped>
     .red {

@@ -1,4 +1,5 @@
-module.exports = {
+const Vue = require('vue');
+module.exports = new Vue({
     data (){
         return {
             email: '',
@@ -73,4 +74,4 @@ module.exports = {
             }
         }
     }
-}
+});
