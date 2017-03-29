@@ -40,7 +40,7 @@
                 <div class="column column-1">&nbsp;</div>
 
                 <div class="column column-2">
-                    <label :class="alias_color">Alias/Forumname:</label>
+                    <label :class="alias_color">Passwort:</label>
                 </div>
 
                 <div class="column column-2">&nbsp;</div>
@@ -53,7 +53,7 @@
                 <div class="column column-5">&nbsp;</div>
 
                 <div class="column column-6">
-                    <button @click="send_request" style="width:100%;">Set password</button>
+                    <button @click="send_request" style="width:100%;">Passwort festlegen</button>
                 </div>
             </div>
 

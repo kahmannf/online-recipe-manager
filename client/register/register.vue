@@ -40,7 +40,7 @@
                 <div class="column column-5">&nbsp;</div>
 
                 <div class="column column-6">
-                    <button @click="send_request" style="width:100%;">Send me a registration-email</button>
+                    <button @click="send_request" style="width:100%;">Schick mir eine Email!</button>
                 </div>
             </div>
 

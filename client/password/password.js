@@ -13,7 +13,7 @@ module.exports = new Vue({
     methods: {
         mounted: function () {
 
-            this.response_message = 'Lade Nutzerdaten ... bitte warten';
+            this.response_message = 'Lade Nutzerdaten ... Bitte warten';
             this.response_color = 'black';
 
             var urlparams = function(){
