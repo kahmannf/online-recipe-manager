@@ -1,6 +1,6 @@
 const Vue = require('vue');
 module.exports = new Vue({
-    data() {
+    data (){
         return {
             email: '',
             alias: '',
