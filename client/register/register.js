@@ -54,7 +54,7 @@ module.exports = new Vue({
                         console.log(req.responseText);
 
                         this.response_message = 'Registrung Schritt 1 abgeschlossen.'
-                                              + ' Sie sollten in den nächsten Minuten eine '
+                                              + ' Du solltest in den nächsten Minuten eine '
                                               + ' Email zur Fortsetzung der Registrierung erhalten.';
 
                         this.response_color = 'green';
@@ -65,7 +65,7 @@ module.exports = new Vue({
                         this.response_color = 'red';
                     }
                     else if (req.readyState === 4) {
-                        this.response_message = 'Sorry da ist etwas schiefgelaufen: Server antwortete mit dem Code \'' + req.status + '\'. Bitte versuchen sie es später noch mal.' + req.responsetext;
+                        this.response_message = 'Sorry da ist etwas schiefgelaufen: Server antwortete mit dem Code \'' + req.status + '\'. Bitte versuche es später noch mal.' + req.responsetext;
                         this.response_color = 'red';
                     }
                 }

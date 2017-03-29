@@ -85,7 +85,7 @@ router.post('/register', (req, res) => {
                             throw err;
                         }
                         else {
-                            res.status(201).send('user created');
+                            res.status(201).send('User erstellt');
                         }
                     });
                 }
@@ -95,7 +95,7 @@ router.post('/register', (req, res) => {
             });
         }
         else {
-            res.status(400).send('not enough information provided');
+            throw 'Nicht genügend Informationen vorhanden.';
         }
     }
     catch (e) {
@@ -104,7 +104,7 @@ router.post('/register', (req, res) => {
             res.status(500).send(e);
             return;
         }
-        res.status(500).send('unexpected server error occured');
+        res.status(500).send('Internal server error');
         return;
     }
 })
@@ -125,16 +125,25 @@ router.get('/byregisterkey/:registerkey', (req, res) => {
     try {
 
         if (!req.registerkey) {
-            res.status(400).send('Register key required');
+            res.status(400).send((config.server.client_error_notification == 1 ? 'Es wurde kein Registerkey mitgegeben.' : 'Aktion nicht möglich.'));
         }
         var requser = new user();
+        requser.registerkey = req.registerkey;
         requser.load_by_registerkey((err, status, requser) => {
             if (err) {
-                throw err;
+                if (config.server.client_error_notification == 1) {
+                    res.status(500).send(err);
+                    return;
+                }
+                else {
+                    res.status(500).send('Internal server error');
+                    return;
+                }
             }
 
             if (status == 2) {
-                res.status(900).send('no user found for that key');
+                res.status(900).send((config.server.client_error_notification == 1 ? 'Ungültiger Registerkey.' : 'Aktion nicht möglich.'));
+                
             }
 
             res.status(200).json(requser);

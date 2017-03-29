@@ -61,6 +61,7 @@ user.prototype.insert_new = function (callback) {
 
             //todo call callback with real value
             callback(undefined, 0, this);
+            return;
         });
     }
     catch (e) {
@@ -94,11 +95,13 @@ user.prototype.load = function (callback) {
             this.alias = rows[0].alias;
 
             callback(undefined, 0, this);
+            return;
 
         });
 
     } catch (e) {
         callback(e, 1, undefined);
+        return;
     }
 }
 
@@ -132,11 +135,13 @@ user.prototype.getfull = function (callback) {
             newuser.alias = rows[0].alias;
 
             callback(undefined, 0, newuser);
+            return;
 
         });
 
     } catch (e) {
         callback(e, 1, undefined);
+        return;
     }
 }
 
@@ -167,6 +172,7 @@ user.prototype.updatesaveinfo = function (callback) {
             }
             
             callback(undefined, 0, this);
+            return;
         });
     }
     catch (e) {
@@ -246,6 +252,7 @@ user.prototype.load_by_registerkey = function (callback) {
 
             if (!rows || !rows.length || rows.length != 1) {
                 callback('Couldnt find a user for that key', 2, undefined);
+                return;
             }
 
             this.alias = rows[0].alias;
@@ -254,6 +261,7 @@ user.prototype.load_by_registerkey = function (callback) {
             this.creation_date = rows[0].creation_date;
 
             callback(undefined, 0, this);
+            return;
         });
     }
     catch (e) {
