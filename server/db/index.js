@@ -26,6 +26,20 @@ module.exports = {
                 return;
             });
         });
+    },
+    /**
+     * Maskes a string for sql insertion
+     * @function
+     * @param {string} str
+     * @returns {string}
+     */
+    mask_str: (str) => {
+        if(!str || str == null){
+            return '';
+        }
+        else{
+            return '\'' + str.replace('\'', '\'\'') + '\'';
+        }
     }
 
     /**

@@ -167,10 +167,10 @@ user.prototype.updatesaveinfo = function (callback) {
         }
         var empty = '';
         var sql = `update users set `
-            + ` email = \'${this.email || empty}\',`
-            + ` registerkey = \'${this.registerkey || empty}\',` 
-            + ` alias = \'${this.alias || empty}\'`
-            + ` where guid = \'${this.guid}\')`;
+            + ` email = ${db.mask_str(this.email)},`
+            + ` registerkey = ${db.mask_str(this.registerkey)},` 
+            + ` alias = ${db.mask_str(this.alias)}`
+            + ` where guid = ${db.mask_str(this.guid)}`;
         
         db.executesql(sql, (err, rows, fields) => {
             if (err) {
@@ -188,6 +188,44 @@ user.prototype.updatesaveinfo = function (callback) {
     }
 }
 
+/**
+* updates all userproperties based on the guid
+* @function
+* @callback dbTransaction
+*/
+user.prototype.updateall = function (callback) {
+    try {
+        if (!this) {
+            throw 'user was undefined or null';
+        }
+
+        if (!this.guid) {
+            throw 'user.guid was undefined or null';
+        }
+        var empty = '';
+        var sql = `update users set `
+            + ` email = ${db.mask_str(this.email)},`
+            + ` registerkey = ${db.mask_str(this.registerkey)},` 
+            + ` alias = ${db.mask_str(this.alias)},`
+            + ` hash = ${db.mask_str(this.hash)},`
+            + ` salt = ${db.mask_str(this.salt)}`
+            + ` where guid = ${db.mask_str(this.guid)}`;
+        
+        db.executesql(sql, (err, rows, fields) => {
+            if (err) {
+                callback(err, 1, undefined);
+                return;
+            }
+            
+            callback(undefined, 0, this);
+            return;
+        });
+    }
+    catch (e) {
+        callback(e, 1, udefined);
+        return;
+    }
+}
 
 /**
 * checks wheter the alias and email are available
@@ -281,6 +319,7 @@ user.prototype.load_by_registerkey = function (callback) {
     }
     catch (e) {
         callback(e, 1, undefined);
+        return;
     }
 }
 /**

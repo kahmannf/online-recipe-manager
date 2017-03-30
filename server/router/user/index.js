@@ -84,11 +84,14 @@ router.get('/byregisterkey/:registerkey', (req, res) => {
 //
 //  3       Invalid Data
 //
+//  4       Issue calling databse
+//
 router.post('/login', (req, res) => {
     var sql = 'select * from users where email like \'' + req.query.email + '\'';
     db.executesql(sql, (err, rows, fields) => {
         if (err) {
-            //todo fehlerbehandlung implementieren;
+            res.status(200).send('4');
+            return;
         }
 
         if (rows.length && rows.length == 1) {
@@ -172,20 +175,45 @@ router.post('/register', (req, res) => {
     }
 })
 
-//
-//
+//  200     Operation successful
 //
 //  400     Not enough/Invalid data provided
+//  900     User not found
+//  901     User could not be updated
 //
 router.post('/setpassword', (req, res) => {
     if(!req.body || !req.body.registerkey || !req.body.guid || !req.body.password){
-        res.status(400).send('Nicht genug daten vorhanden');
+        res.status(400).send('Nicht genügend Daten vorhanden');
         return;
     }
 
     var pwuser = new user();
-    pwuser.guid = req.body.guid;
-    pwuser.
+    pwuser.registerkey = req.body.registerkey;
+    pwuser.load_by_registerkey((err, status, pwuser)=>{
+        if(err){
+            res.status(900).send(config.server.client_error_notification == 1 ? err : 'Laden des Users aus der Datenbank fehlgeschlagen');
+            return;
+        }
+        
+        var sec_data = security.createnew_password_hash(req.body.password);
+
+        pwuser.hash = sec_data.passwordHash;
+        pwuser.salt = sec_data.salt;
+
+        pwuser.registerkey = null;
+
+        pwuser.updateall((err, status, pwuser)=>{
+            if(err){
+                res.status(900).send(config.server.client_error_notification == 1 ? err : 'Updaten des Users in der Datenbank fehlgeschlagen');
+                return;
+            }
+
+            res.status(200).send();
+            return;
+        });
+        return;
+
+    });
 })
 
 module.exports = router;

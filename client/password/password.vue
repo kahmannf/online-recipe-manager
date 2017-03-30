@@ -46,7 +46,7 @@
                 <div class="column column-2">&nbsp;</div>
 
                 <div class="column column-6">
-                    <input class="clear" type="text" v-model="password">
+                    <input class="clear" type="password" v-model="password">
                 </div>
             </div>
             <div class="row" v-if="key_set">
