@@ -198,7 +198,7 @@ user.prototype.is_alias_email_available = function (callback) {
 
         db.executesql(sql, (err, rows, fields) => {
             if (err) {
-                throw err;
+                callback(err, false, undefined);
             }
 
             if (!rows || !rows.length || rows.length == 0) {
