@@ -1,8 +1,9 @@
 module.exports = {
     data (){
         return {
-            email: '',
-            alias: '',
+            email: '-',
+            alias: '-',
+            guid_user: '',
             registerkey: '',
             response_message: 'Bitte gib deine Daten ein:',
             response_color: 'black',
@@ -82,6 +83,10 @@ module.exports = {
                 if (req.readyState === 4 && req.status == 200) {
                     this.response_message = 'Bitte wähle ein Passwort';
                     this.response_color = 'black';
+                    var data = JSON.parse(req.responseText);
+                    this.email = data.email;
+                    this.alias = data.alias
+                    this.guid_user = data.guid;
                 }
                 else if(req.readyState === 4 && req.status == 900){
                     this.response_message = 'Der Registrierungskey ist ungültig';

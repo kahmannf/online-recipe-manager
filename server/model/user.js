@@ -56,7 +56,8 @@ user.prototype.insert_new = function (callback) {
 
         db.executesql(sql, (err, rows, fields) => {
             if (err) {
-                throw err;
+                callback(err, 1, undefined);
+                return;
             }
             console.log(rows);
 
@@ -84,10 +85,12 @@ user.prototype.load = function (callback) {
 
         db.executesql(`select * from users where guid = \'${this.guid}\'`, (err, rows, fields) => {
             if (err) {
-                throw err;
+                callback(err, 1, undefined);
+                return;
             }
             if (!rows || !rows.length || rows.length != 1) {
-                throw 'wasnt able to retrieve unique result';
+                callback('wasnt able to retrieve unique result', 1, undefined);
+                return;
             }
 
             this.email = rows[0].email;
@@ -119,10 +122,12 @@ user.prototype.getfull = function (callback) {
 
         db.executesql(`select * from users where guid = \'${this.guid}\'`, (err, rows, fields) => {
             if (err) {
-                throw err;
+                callback(err, 1, undefined);
+                return;
             }
             if (!rows || !rows.length || rows.length != 1) {
-                throw 'wasnt able to retrieve unique result';
+                callback('wasnt able to retrieve unique result', 1, undefined);
+                return;
             }
 
             var newuser = new user();
@@ -169,7 +174,8 @@ user.prototype.updatesaveinfo = function (callback) {
         
         db.executesql(sql, (err, rows, fields) => {
             if (err) {
-                throw err;
+                callback(err, 1, undefined);
+                return;
             }
             
             callback(undefined, 0, this);
@@ -199,6 +205,7 @@ user.prototype.is_alias_email_available = function (callback) {
         db.executesql(sql, (err, rows, fields) => {
             if (err) {
                 callback(err, false, undefined);
+                return;
             }
 
             if (!rows || !rows.length || rows.length == 0) {

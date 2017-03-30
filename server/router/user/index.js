@@ -11,6 +11,70 @@ const security = require('../../security');
 
 const user = require('../../model/user');
 
+router.param('registerkey', (req, res, next, registerkey) => {
+    req.registerkey = registerkey;
+    next();
+});
+
+//
+//  200     Request sucessful
+//
+//  400     Invalid Arguments/Params
+//
+//  900     No user found for registerkey
+//
+router.get('/byregisterkey/:registerkey', (req, res) => {
+    try {
+
+        if (!req.registerkey) {
+            res.status(400).send((config.server.client_error_notification == 1 ? 'Es wurde kein Registerkey mitgegeben.' : 'Aktion nicht möglich.'));
+        }
+        var requser = new user();
+        requser.registerkey = req.registerkey;
+
+        if(requser.registerkey == 'Dummy'){
+            requser.alias = 'Dummy';
+            requser.email = 'dummy@kahmann.com';
+            requser.guid = 'abcdefghijklmnopqrstuvwxyz';
+
+            res.status(200).json(requser);
+            return;
+        }
+
+        requser.load_by_registerkey((err, status, requser) => {
+            if (err) {
+                if (config.server.client_error_notification == 1) {
+                    res.status(500).send(err);
+                    return;
+                }
+                else {
+                    res.status(500).send('Internal server error');
+                    return;
+                }
+            }
+
+            if (status == 2) {
+                res.status(900).send((config.server.client_error_notification == 1 ? 'Ungültiger Registerkey.' : 'Aktion nicht möglich.'));
+                
+            }
+
+            res.status(200).json(requser);
+            return;
+        });
+    }
+    catch (e) {
+        if (config.server.client_error_notification == 1) {
+            res.status(500).send(e);
+            return;
+        }
+        else {
+            res.status(500).send('Internal server error');
+            return;
+        }
+    }
+});
+
+
 //Returncodes:
 //
 //  0       Sucessful Login
@@ -24,8 +88,7 @@ router.post('/login', (req, res) => {
     var sql = 'select * from users where email like \'' + req.query.email + '\'';
     db.executesql(sql, (err, rows, fields) => {
         if (err) {
-            db.handleDBerror(err, res);
-            return;
+            //todo fehlerbehandlung implementieren;
         }
 
         if (rows.length && rows.length == 1) {
@@ -109,67 +172,20 @@ router.post('/register', (req, res) => {
     }
 })
 
-router.param('registerkey', (req, res, next, registerkey) => {
-    req.registerkey = registerkey;
-    next();
-});
-
 //
-//  200     Request sucessful
 //
-//  400     Invalid Arguments/Params
 //
-//  900     No user found for registerkey
+//  400     Not enough/Invalid data provided
 //
-router.get('/byregisterkey/:registerkey', (req, res) => {
-    try {
-
-        if (!req.registerkey) {
-            res.status(400).send((config.server.client_error_notification == 1 ? 'Es wurde kein Registerkey mitgegeben.' : 'Aktion nicht möglich.'));
-        }
-        var requser = new user();
-        requser.registerkey = req.registerkey;
-
-        if(requser.registerkey == 'Dummy'){
-            requser.alias = 'Dummy';
-            requser.email = 'dummy@kahmann.com';
-            requser.guid = 'abcdefghijklmnopqrstuvwxyz';
-
-            res.status(200).json(requser);
-            return;
-        }
-
-        requser.load_by_registerkey((err, status, requser) => {
-            if (err) {
-                if (config.server.client_error_notification == 1) {
-                    res.status(500).send(err);
-                    return;
-                }
-                else {
-                    res.status(500).send('Internal server error');
-                    return;
-                }
-            }
-
-            if (status == 2) {
-                res.status(900).send((config.server.client_error_notification == 1 ? 'Ungültiger Registerkey.' : 'Aktion nicht möglich.'));
-                
-            }
-
-            res.status(200).json(requser);
-            return;
-        });
+router.post('/setpassword', (req, res) => {
+    if(!req.body || !req.body.registerkey || !req.body.guid || !req.body.password){
+        res.status(400).send('Nicht genug daten vorhanden');
+        return;
     }
-    catch (e) {
-        if (config.server.client_error_notification == 1) {
-            res.status(500).send(e);
-            return;
-        }
-        else {
-            res.status(500).send('Internal server error');
-            return;
-        }
-    }
-});
+
+    var pwuser = new user();
+    pwuser.guid = req.body.guid;
+    pwuser.
+})
 
 module.exports = router;
