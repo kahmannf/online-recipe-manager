@@ -1,5 +1,5 @@
 const Vue = require('vue');
-module.exports = new Vue({
+module.exports = {
     data (){
         return {
             email: '',
@@ -34,55 +34,55 @@ module.exports = new Vue({
                 console.error(e);
 
             }
-        },
-        mounted: function () {
+        }
+    },
+    created: function () {
 
-            var geturlparams = () => {
-                var assoc  = {};
-                var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
-                var queryString = location.search.substring(1); 
-                var keyValues = queryString.split('&'); 
+        var geturlparams = () => {
+            var assoc  = {};
+            var decode = function (s) { return decodeURIComponent(s.replace(/\+/g, " ")); };
+            var queryString = location.search.substring(1); 
+            var keyValues = queryString.split('&'); 
 
-                for(var i in keyValues) { 
-                    var key = keyValues[i].split('=');
-                    if (key.length > 1) {
-                    assoc[decode(key[0])] = decode(key[1]);
-                    }
-                } 
+            for(var i in keyValues) { 
+                var key = keyValues[i].split('=');
+                if (key.length > 1) {
+                assoc[decode(key[0])] = decode(key[1]);
+                }
+            } 
 
-                return assoc; 
-            }
+            return assoc; 
+        }
 
-            this.response_message = 'Lade Nutzerdaten ... Bitte warten';
-            this.response_color = 'black';
+        this.response_message = 'Lade Nutzerdaten ... Bitte warten';
+        this.response_color = 'black';
 
-            this.key_set = geturlparams()['key'] != undefined;
+        this.key_set = geturlparams()['key'] != undefined;
 
-            if(this.key_set)
-            {
-                var req = new XMLHttpRequest();
-                var path = '/user/byregisterkey/' + geturlparams()['key'];
+        if(this.key_set)
+        {
+            var req = new XMLHttpRequest();
+            var path = '/user/byregisterkey/' + geturlparams()['key'];
 
 
-                req.open("GET", path, true);
-                req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-                req.onreadystatechange = () => {
-                    if (req.readyState === 4 && req.status == 200) {
-                        this.response_message = 'Bitte wähle ein Passwort';
-                        this.response_color = 'black';
-                    }
-
-                    else if (req.readyState === 4){
-                        this.response_message = req.responseText;
-                        this.response_color = 'red';
-                    }
+            req.open("GET", path, true);
+            req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            req.onreadystatechange = () => {
+                if (req.readyState === 4 && req.status == 200) {
+                    this.response_message = 'Bitte wähle ein Passwort';
+                    this.response_color = 'black';
                 }
 
-                req.send();
+                else if (req.readyState === 4){
+                    this.response_message = req.responseText;
+                    this.response_color = 'red';
+                }
             }
-            else {
-                this.response_message = 'Der Link zu dieser Seite ist ungültig';
-            }
+
+            req.send();
+        }
+        else {
+            this.response_message = 'Der Link zu dieser Seite ist ungültig';
         }
     }
-});
+}

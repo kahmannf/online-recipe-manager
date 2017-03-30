@@ -1,5 +1,5 @@
 const Vue = require('vue');
-module.exports = new Vue({
+module.exports = {
     data (){
         return {
             email: '',
@@ -77,4 +77,4 @@ module.exports = new Vue({
             }
         }
     }
-});
+};

@@ -1,6 +1,7 @@
 'use strict';
 const uuid = require('uuid/v4');
 const db = require('../db');
+const config = require('../config');
 
 /**
  * @constructor Creates a new user with a new guid.
@@ -247,7 +248,14 @@ user.prototype.load_by_registerkey = function (callback) {
         var sql = 'select * from users where registerkey = \'' + this.registerkey + '\'';
         db.executesql(sql, (err, rows, fields) => {
             if (err) {
-                throw err;
+                if(config.server.client_error_notification == 1){
+                    callback(err, 1, undefined);
+                    return;
+                }
+                else {
+                    callback('Internal server error', 1, undefined);
+                    return;
+                }
             }
 
             if (!rows || !rows.length || rows.length != 1) {
