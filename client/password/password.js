@@ -88,7 +88,7 @@ module.exports = {
 
         this.registerkey = geturlparams()['key'];
 
-        this.key_set = this.registerkey != undefined;
+        this.key_set = this.registerkey != undefined && this.registerkey != null && this.registerkey != '';
 
         if(this.key_set)
         {
