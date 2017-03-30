@@ -4,9 +4,10 @@ const db = require('../db');
 const config = require('../config');
 
 /**
+ * @class
  * @constructor Creates a new user with a new guid.
  */
-function user()
+const user = function ()
 {
     /** @member {string} */
     this.email = null;
