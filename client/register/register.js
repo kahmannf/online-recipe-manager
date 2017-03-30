@@ -1,4 +1,3 @@
-const Vue = require('vue');
 module.exports = {
     data (){
         return {

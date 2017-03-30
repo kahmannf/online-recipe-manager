@@ -10,7 +10,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" v-if="key_set">
                 <div class="column column-1">&nbsp;</div>
 
                 <div class="column column-2">
@@ -20,10 +20,10 @@
                 <div class="column column-2">&nbsp;</div>
 
                 <div class="column column-6">
-                    <label class="clear" type="text" v-model="email"></label>
+                    {{email}}
                 </div>
             </div>
-            <div class="row">
+            <div class="row" v-if="key_set">
                 <div class="column column-1">&nbsp;</div>
 
                 <div class="column column-2">
@@ -33,10 +33,10 @@
                 <div class="column column-2">&nbsp;</div>
 
                 <div class="column column-6">
-                    <label class="clear" type="text" v-model="alias"></label>
+                    {{alias}}
                 </div>
             </div>
-            <div class="row">
+            <div class="row" v-if="key_set">
                 <div class="column column-1">&nbsp;</div>
 
                 <div class="column column-2">
@@ -49,7 +49,7 @@
                     <input class="clear" type="text" v-model="password">
                 </div>
             </div>
-            <div class="row">
+            <div class="row" v-if="key_set">
                 <div class="column column-5">&nbsp;</div>
 
                 <div class="column column-6">

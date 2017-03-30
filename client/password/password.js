@@ -1,4 +1,3 @@
-const Vue = require('vue');
 module.exports = {
     data (){
         return {
@@ -14,6 +13,13 @@ module.exports = {
     methods: {
         send_request: function () {
             try {
+                if(!this.key_set) {
+
+                }
+                if (!this.password) {
+                    this.response_message = "Bitte gibt ein Passwort ein";
+                    this.response_color = 'red';
+                }
 
                 this.response_message = 'Sende anfrage an den Server...';
                 this.response_color = 'black';
@@ -27,7 +33,12 @@ module.exports = {
                     }
                 }
 
-                req.send(JSON.stringify({ email: this.email, alias: this.alias }));
+                req.send(JSON.stringify({ 
+                    email: this.email, 
+                    alias: this.alias, 
+                    password: this.password,
+                    registerkey: this.registerkey,  
+                }));
 
             } catch (e) {
                 console.error('Error in register.vue: methode \'send_request\'');
@@ -72,9 +83,15 @@ module.exports = {
                     this.response_message = 'Bitte wähle ein Passwort';
                     this.response_color = 'black';
                 }
+                else if(req.readyState === 4 && req.status == 900){
+                    this.response_message = 'Der Registrierungskey ist ungültig';
+                    this.key_set = false;
+                    this.response_color = 'red';
+                }
 
                 else if (req.readyState === 4){
                     this.response_message = req.responseText;
+                    this.key_set = false;
                     this.response_color = 'red';
                 }
             }
@@ -83,6 +100,7 @@ module.exports = {
         }
         else {
             this.response_message = 'Der Link zu dieser Seite ist ungültig';
+            this.response_color = 'red';
         }
     }
 }

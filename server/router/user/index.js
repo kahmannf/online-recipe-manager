@@ -129,6 +129,16 @@ router.get('/byregisterkey/:registerkey', (req, res) => {
         }
         var requser = new user();
         requser.registerkey = req.registerkey;
+
+        if(requser.registerkey == 'Dummy'){
+            requser.alias = 'Dummy';
+            requser.email = 'dummy@kahmann.com';
+            requser.guid = 'abcdefghijklmnopqrstuvwxyz';
+
+            res.status(200).json(requser);
+            return;
+        }
+
         requser.load_by_registerkey((err, status, requser) => {
             if (err) {
                 if (config.server.client_error_notification == 1) {
