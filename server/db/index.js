@@ -35,7 +35,7 @@ module.exports = {
      */
     mask_str: (str) => {
         if(!str || str == null){
-            return '';
+            return 'null';
         }
         else{
             return '\'' + str.replace('\'', '\'\'') + '\'';
