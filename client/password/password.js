@@ -1,8 +1,9 @@
 module.exports = {
     data (){
         return {
-            email: '',
-            alias: '',
+            email: '-',
+            alias: '-',
+            guid_user: '',
             registerkey: '',
             response_message: 'Bitte gib deine Daten ein:',
             response_color: 'black',
@@ -14,15 +15,25 @@ module.exports = {
         send_request: function () {
             try {
                 if(!this.key_set) {
-
+                    return;
                 }
-                if (!this.password) {
+
+                if (!this.password || this.password == '') {
                     this.response_message = "Bitte gibt ein Passwort ein";
                     this.response_color = 'red';
+                    return;
                 }
 
-                this.response_message = 'Sende anfrage an den Server...';
+                if (this.password.length < 3) {
+                    this.response_message = "Das Passwort muss mindestens 3 Zeichen haben";
+                    this.response_color = 'red';
+                    return;
+                }
+
+                this.response_message = 'Sende Anfrage an den Server...';
                 this.response_color = 'black';
+
+                this.key_set = false;
 
                 var req = new XMLHttpRequest();
                 var path = '/user/setpassword';
@@ -30,12 +41,19 @@ module.exports = {
                 req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
                 req.onreadystatechange = () => {
                     if (req.readyState === 4 && req.status == 200) {
+                        //Todo: think about redirecting directly
+                        this.response_message = 'Benutzer erfolgreich erstellt!';
+                        this.response_color = 'green';
+                    }
+
+                    else if(req.readyState === 4){
+                        this.response_message = 'Da ist etwas schiefgelaufen. ' + req.responseText;
+                        this.response_color = 'red';
                     }
                 }
 
                 req.send(JSON.stringify({ 
-                    email: this.email, 
-                    alias: this.alias, 
+                    guid: this.guid_user,
                     password: this.password,
                     registerkey: this.registerkey,  
                 }));
@@ -68,12 +86,14 @@ module.exports = {
         this.response_message = 'Lade Nutzerdaten ... Bitte warten';
         this.response_color = 'black';
 
-        this.key_set = geturlparams()['key'] != undefined;
+        this.registerkey = geturlparams()['key'];
+
+        this.key_set = this.registerkey != undefined && this.registerkey != null && this.registerkey != '';
 
         if(this.key_set)
         {
             var req = new XMLHttpRequest();
-            var path = '/user/byregisterkey/' + geturlparams()['key'];
+            var path = '/user/byregisterkey/' + this.registerkey;
 
 
             req.open("GET", path, true);
@@ -82,6 +102,10 @@ module.exports = {
                 if (req.readyState === 4 && req.status == 200) {
                     this.response_message = 'Bitte wähle ein Passwort';
                     this.response_color = 'black';
+                    var data = JSON.parse(req.responseText);
+                    this.email = data.email;
+                    this.alias = data.alias
+                    this.guid_user = data.guid;
                 }
                 else if(req.readyState === 4 && req.status == 900){
                     this.response_message = 'Der Registrierungskey ist ungültig';
