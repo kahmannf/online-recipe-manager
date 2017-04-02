@@ -6,6 +6,8 @@ const router = express.Router();
 
 const config = require('../../config');
 
+const emailclient = require('../../email');
+
 const db = require('../../db');
 const security = require('../../security');
 
@@ -151,6 +153,7 @@ router.post('/register', (req, res) => {
                             throw err;
                         }
                         else {
+                            emailclient.registrationmail(newuser);
                             res.status(201).send('User erstellt');
                         }
                     });
