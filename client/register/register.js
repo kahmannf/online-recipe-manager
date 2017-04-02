@@ -3,7 +3,7 @@ module.exports = {
         return {
             email: '',
             alias: '',
-            response_message: 'Bitte gibt deine Daten ein:',
+            response_message: 'Bitte gib deine Daten ein:',
             response_color: 'black',
             alias_color: 'black',
             email_color: 'black',
@@ -52,9 +52,9 @@ module.exports = {
                         console.log(req.response.status);
                         console.log(req.responseText);
 
-                        this.response_message = 'Registrung Schritt 1 abgeschlossen.'
+                        this.response_message = 'Registrierung Schritt 1 abgeschlossen.'
                                               + ' Du solltest in den nächsten Minuten eine '
-                                              + ' Email zur Fortsetzung der Registrierung erhalten.';
+                                              + ' Email zur Festlegung deines Passworts erhalten.';
 
                         this.response_color = 'green';
 
