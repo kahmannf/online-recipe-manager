@@ -2,6 +2,7 @@
 const uuid = require('uuid/v4');
 const db = require('../db');
 const config = require('../config');
+const security = require('./../security');
 
 /**
  * @class
@@ -26,10 +27,8 @@ const user = function ()
 }
 
 /**
-* Creates a new user with a new guid. Also sets a reigster key
-* @constructor 
-* @param {string} email the users email
-* @param {string} alias the users alias/username
+* Generates a registerkey for the userobject
+* @function 
 */
 user.prototype.generate_registerkey = function() {
     this.registerkey = uuid();
@@ -280,7 +279,7 @@ user.prototype.is_alias_email_available = function (callback) {
 * @function
 * @callback dbTransaction
 * errorcodes:
-*   0   Sucess
+*   0   Success
 *   1   Unknown Error
 *   2   no user found for that registerkey
 */
@@ -323,6 +322,55 @@ user.prototype.load_by_registerkey = function (callback) {
         return;
     }
 }
+
+/**
+* Tries to perform a login. Fills userdata if sucessful
+* @function
+* @param {string} email
+* @param {string} password
+* @callback dbTransaction callback
+* errorcodes:
+*   0   Success
+*   1   Unknown error
+*   2   no user found for that email
+*   3   invalid email/password-combination
+*/
+user.prototype.login = function (password, callback) {
+    try {
+        var sql = 'select * from users where email = ' + db.mask_str(this.email);
+
+        db.executesql(sql, (err, rows, fieldinfo) => {
+            if (err) {
+                callback(err, 1, undefined);
+                return;
+            }
+
+            if (!rows || rows.length != 1) {
+                callback('No user found!', 2, undefined);
+                return;
+            }
+
+            if (security.comparepassword(password, rows[0].salt, rows[0].hash)) {
+
+                this.alias = rows[0].alias;
+                this.creation_date = rows[0].creation_date;
+                this.guid = rows[0].guid;
+
+                callback(undefined, 0, this);
+                return;
+            }
+            else {
+                callback("invalid email/password-combination", 3, undefined);
+                return;
+            }
+        });
+    }
+    catch (e) {
+        callback(e, 1, undefined);
+        return;
+    }
+}
+
 /**
 * @callback user~validationRequest
 * @param {any} err error in case of non-sucessful execution

@@ -76,51 +76,56 @@ router.get('/byregisterkey/:registerkey', (req, res) => {
     }
 });
 
+//
+//  200     Request sucessful
+//
+//  400     no sessionuser
+//
+router.get('/current', (req, res) => {
+    if (req.session.user_loggedin && req.session.user_loggedin != null) {
+        res.status(200).send(JSON.stringify(req.session.user_loggedin));
+        return;
+    }
+    else {
+        res.status(400).send();
+        return;
+    }
+});
 
 //Returncodes:
 //
-//  0       Sucessful Login
+//  200     Sucessful Login
 //
-//  1       Invalid email/password combination
-//  2       User not Registered
-//
-//  3       Invalid Data
-//
-//  4       Issue calling databse
+//  900     Invalid email/password combination
+//  901     User not Registered
 //
 router.post('/login', (req, res) => {
-    var sql = 'select * from users where email like \'' + req.query.email + '\'';
-    db.executesql(sql, (err, rows, fields) => {
+    if (!req.body.email || !req.body.password) {
+        res.status(400).send('');
+        return;
+    }
+
+    var loginuser = new user();
+    loginuser.email = req.body.email;
+    loginuser.login(req.body.password, (err, statuscode, loginuser) => {
         if (err) {
-            res.status(200).send('4');
-            return;
-        }
-
-        if (rows.length && rows.length == 1) {
-
-            if (!rows[0].salt || !rows[0].hash) { //User-registration not complete
-                if (rows[0].register_key) {
-                    res.status(200).send('2');
-                }
-                else {
-                    res.status(200).send('3');
-                }
-                return;
-            }
-
-            if (security.comparepassword(req.query.password, rows[0].salt, rows[0].hash)) {
-
-                req.session.loggedinuser = rows[0].guid;
-            
-                res.status(200).send('0');
-            }
-            else { //Invalid password
-                res.status(200).send('1');
+            switch (statuscode) {
+                case 1:
+                    res.status(500).send(config.server.client_error_notification == 1 ? err : 'Internal server error');
+                    return;
+                case 2:
+                    res.status(901).send('');
+                    return;
+                case 3:
+                    res.status(900).send('');
+                    return;
             }
         }
-        else {
-            res.status(200).send('1');
-        }
+
+        req.session.user_loggedin = loginuser;
+        req.session.save((err) => { console.log(err); });
+
+        res.status(200).send(JSON.stringify(loginuser));
     });
 });
 
@@ -218,5 +223,23 @@ router.post('/setpassword', (req, res) => {
 
     });
 })
+
+//
+//  200     successful performed logout
+//
+//  500     Internal Server error
+//
+router.post('/logout', (req, res) => {
+    try {
+        req.session.user_loggedin = undefined;
+        req.session.save((err) => { console.log(err) });
+        res.status(200).send();
+        return;
+    }
+    catch (e) {
+        res.status(500).send();
+        return;
+    }
+});
 
 module.exports = router;

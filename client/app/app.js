@@ -1,27 +1,35 @@
-const comp_header = require('./components/comp_header.vue');
+const app_header = require('./components/app-header.vue');
+const app_body = require('./components/app-body.vue');
 
 module.exports = {
     data() {
         return {
-            msg: 'Hello world',
-            menu:
-            [
-                {
-                    id: 0,
-                    name: 'Home'
+            appstate: {
+                user_loggedin: null,
+                changeview: (v) => {
+                    this.view = v;
                 },
-                {
-                    id: 1,
-                    name: 'Contact us'
-                },
-                {
-                    id: 2,
-                    name: 'About'
-                }
-            ]
+            },
+            view: '',
         }
     },
     components: {
-        comp_header,
+        app_header,
+        app_body,
+    },
+    methods: {
+    },
+    mounted: function () {
+        var req = new XMLHttpRequest();
+        var path = '/user/current';
+        req.open("GET", path, true);
+        req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+        req.onreadystatechange = () => {
+            if (req.readyState === 4 && req.status == 200) {
+                this.appstate.user_loggedin = JSON.parse(req.responseText);
+            }
+        }
+
+        req.send();
     }
 }
