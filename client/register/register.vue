@@ -1,43 +1,34 @@
 <template>
     <div class="row" style="margin-top:100px;">
         <div class="column column-4">&nbsp;</div>
-        <div class="column column-4 grey-border">
+        <div class="column column-4 login-border" style="background-color:#fff;">
             <div class="row">
-                <div class="column column-1">&nbsp;</div>
                 <div class="column column-8">
                     <div :class="response_color">
                         {{response_message}}
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="column column-1">&nbsp;</div>
-
-                <div class="column column-2">
+            <div class="row" v-if="isexpanded">
+                <div class="column column-4">
                     <label :class="email_color">Email:</label>
                 </div>
 
-                <div class="column column-2">&nbsp;</div>
-
-                <div class="column column-6">
+                <div class="column column-8" style="margin: 0 auto;">
                     <input class="clear" type="text" v-model="email">
                 </div>
             </div>
-            <div class="row">
-                <div class="column column-1">&nbsp;</div>
-
-                <div class="column column-2">
+            <div class="row" v-if="isexpanded">
+                <div class="column column-4">
                     <label :class="alias_color">Alias/Forumname:</label>
                 </div>
 
-                <div class="column column-2">&nbsp;</div>
-
-                <div class="column column-6">
+                <div class="column column-8" style="margin: 0 auto;">
                     <input class="clear" type="text" v-model="alias">
                 </div>
             </div>
-            <div class="row">
-                <div class="column column-5">&nbsp;</div>
+            <div class="row" v-if="isexpanded">
+                <div class="column column-6">&nbsp;</div>
 
                 <div class="column column-6">
                     <button @click="send_request" style="width:100%;">Schick mir eine Email!</button>
@@ -62,5 +53,9 @@
 
     .green {
         color: #0a0;
+    }
+
+    .row {
+        padding: 5px 0;
     }
 </style>

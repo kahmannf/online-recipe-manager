@@ -12,13 +12,14 @@ module.exports = {
     props: ["appstate"],
     methods: {
         login: function () {
-            if (!this.password || this.password.length == 0) {
-                this.password_color = 'red';
+            if (!this.email || this.email.length < 5) {
+                this.email_color = 'backred';
                 return;
             }
 
-            if (!this.email || this.email.length < 5) {
-                this.email_color = 'red';
+            if (!this.password || this.password.length == 0) {
+                this.password_color = 'backred';
+                return;
             }
 
             this.password_color = '';

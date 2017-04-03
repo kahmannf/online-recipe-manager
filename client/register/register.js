@@ -7,6 +7,7 @@ module.exports = {
             response_color: 'black',
             alias_color: 'black',
             email_color: 'black',
+            isexpanded: true,
         }
     },
     methods: {
@@ -42,6 +43,7 @@ module.exports = {
 
                 this.response_message = 'Schicke Registrierungsanfrage an den Server...';
                 this.response_color = 'black';
+                this.isexpanded = false;
                 
                 var req = new XMLHttpRequest();
                 var path = '/user/register';
@@ -62,10 +64,12 @@ module.exports = {
                     else if (req.readyState === 4 && req.status == 900) {
                         this.response_message = 'Die folgenden Felder sind bereits vergeben: ' + JSON.parse(req.responseText);
                         this.response_color = 'red';
+                        this.isexpanded = true;
                     }
                     else if (req.readyState === 4) {
                         this.response_message = 'Sorry da ist etwas schiefgelaufen: Server antwortete mit dem Code \'' + req.status + '\'. Bitte versuche es später noch mal.' + req.responsetext;
                         this.response_color = 'red';
+                        this.isexpanded = true;
                     }
                 }
                 req.send(JSON.stringify({ email: this.email, alias: this.alias }));

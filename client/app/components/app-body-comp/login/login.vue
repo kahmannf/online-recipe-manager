@@ -18,17 +18,18 @@
             <div class="column column-6">
                 <input :class="password_color" type="password" v-model="password" />
             </div>
-            <div class="column column-3">
-                <button @click="register()">Registrieren</button>
-            </div>
         </div>
         <div class="row" style="padding: 5px 0;">
-            <div class="column column-6">
+            <div class="column column-3">
+                <a href="/register.html">Registrieren</a>
+            </div>
+            <div class="column column-6" style="margin: 0 10px;">
                 <a href="/resetpassword.html">Passwort zur&uuml;cksetzten</a>
             </div>
-            <div class="column column-6 red">
+        </div>
+        <div class="row">
+            <div class="column column-12 red">
                 <label>{{errormessage}}</label>
-                <label v-if="!errormessage">&nbsp;</label>
             </div>
         </div>
     </div>
@@ -52,13 +53,18 @@
     }
 
     .red {
-        color: #f00;
+        color: #d66;
     }
 
-    .login-border {
-        padding: 5%;
-        border-style: solid;
-        border-color: lightgray;
-        border-width: 2px;
+    .backred {
+        background-color: #d66;
+    }
+    
+    a { 
+        color: #baa;
+    }
+
+    a:visited {
+        color: #baa;
     }
 </style>

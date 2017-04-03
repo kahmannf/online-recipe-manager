@@ -4,13 +4,18 @@ html {
   padding: 0;
 }
 
+body {
+  margin: 0;
+  background-color: #f5f5f5;
+}
+
 .column {
   float: left;
 }
 
 .row {
-    width: 100%;
-    margin: 0;
+  width: 100%;
+  margin: 0;
 }
 
 .row:after, .row:before {
@@ -27,11 +32,11 @@ html {
 }
 
 .column-8 {
-    width: 66.66%;
+  width: 66.66%;
 }
 
 .column-7 {
-    width: 58.33%;
+  width: 58.33%;
 }
 
 .column-6 {
@@ -39,7 +44,7 @@ html {
 }
 
 .column-5 {
-    width: 41.66%;
+  width: 41.66%;
 }
 
 .column-4 {
@@ -58,19 +63,20 @@ html {
   width: 8.33%;
 }
 
-.grey-border {
-    border-width: 4px;
-    border-color: lightgray;
-    border-style: solid;
+.login-border {
+  padding: 20px;
+  border-style: solid;
+  border-color: lightgray;
+  border-width: 2px;
 }
 
 input {
-    width: 100%;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+  width: 100%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
 }
 
 .header-style {
-    background-color: lightgray;
+  background-color: lightgray;
 }
