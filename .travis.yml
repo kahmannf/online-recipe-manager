@@ -1,6 +1,7 @@
 language: node_js
 notification:
   email: false
+  slack: kahmannprojects:5lQI18z1k1hyIjC2rHReDMgX
 node_js:
   - "7"
 before_script:
