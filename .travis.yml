@@ -1,8 +1,6 @@
 language: node_js
 notification:
   email: false
-  webhhoks:
-    - http://vahlkamp.selfhost.eu:10007/recieve/
 node_js:
   - "7"
 before_script:
