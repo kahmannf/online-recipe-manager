@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "gulp build",
-    "start_prod": "node index.js"
+    "start_prod": "node index.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "vueify": "^9.4.1"
   },
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "mocha": "^3.2.0"
   }
 }
