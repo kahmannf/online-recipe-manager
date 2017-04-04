@@ -1,5 +1,5 @@
 language: node_js
-notifications:
+notification:
   slack: kahmannprojects:5lQI18z1k1hyIjC2rHReDMgX
   email: false
 node_js:
