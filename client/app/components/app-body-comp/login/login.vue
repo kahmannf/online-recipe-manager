@@ -5,10 +5,7 @@
                 <label>Email</label>
             </div>
             <div class="column column-6">
-                <input :class="email_color" type="text" v-model="email" />
-            </div>
-            <div class="column column-3">
-                <button @click="login()">Login</button>
+                <input :class="email_color" @keyup.enter="login()" type="text" v-model="email" />
             </div>
         </div>
         <div class="row" style="padding: 5px 0;">
@@ -16,15 +13,21 @@
                 <label>Passwort</label>
             </div>
             <div class="column column-6">
-                <input :class="password_color" type="password" v-model="password" />
+                <input :class="password_color" @keyup.enter="login()" type="password" v-model="password" />
+            </div>
+            <div class="column column-3">
+                <button @click="login()">Login</button>
             </div>
         </div>
         <div class="row" style="padding: 5px 0;">
             <div class="column column-3">
                 <a href="/register.html">Registrieren</a>
             </div>
-            <div class="column column-6" style="margin: 0 10px;">
+            <div class="column column-6">
                 <a href="/resetpassword.html">Passwort zur&uuml;cksetzten</a>
+            </div>
+            <div class="column column-3">
+                <a href="#" @click="appstate.changeview('home')">zur&uuml;ck</a>
             </div>
         </div>
         <div class="row">
@@ -43,6 +46,11 @@
     }
 
     div.column-6 input {
+        width: 90%;
+        margin: 0 5%;
+    }
+    
+    div.column-6 a {
         width: 90%;
         margin: 0 5%;
     }

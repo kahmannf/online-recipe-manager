@@ -8,7 +8,7 @@
     <div class="row">
         <div class="row">
             <div class="column column-12">
-                <app_header :appstate="appstate" v-if="appstate.user_loggedin"></app_header>
+                <app_header :appstate="appstate"></app_header>
             </div>
         </div>
         <div class="row">

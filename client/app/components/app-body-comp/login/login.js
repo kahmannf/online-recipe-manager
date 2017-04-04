@@ -33,6 +33,7 @@ module.exports = {
             req.onreadystatechange = () => {
                 if (req.readyState === 4 && req.status == 200) {
                     this.appstate.user_loggedin = JSON.parse(req.responseText);
+                    this.appstate.changeview('home');
                 }
                 else if (req.readyState === 4 && req.status == 900) {
                     this.errormessage = 'Ung' + unescape("%FC") + 'ltige Login-Daten';

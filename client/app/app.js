@@ -10,7 +10,7 @@ module.exports = {
                     this.view = v;
                 },
             },
-            view: '',
+            view: 'home',
         }
     },
     components: {
