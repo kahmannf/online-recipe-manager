@@ -6,7 +6,7 @@ const vueify = require('vueify');
 
 // Task: vueify
 // Transform and bundle .js and .vue files
-gulp.task('vueify_app', () => {
+gulp.task('vueify_app', function() {
     return browserify('./client/app')
         .transform(vueify)
         .bundle()
@@ -15,7 +15,7 @@ gulp.task('vueify_app', () => {
 
 // Task: vueify
 // Transform and bundle .js and .vue files
-gulp.task('vueify_register', () => {
+gulp.task('vueify_register', function () {
     return browserify('./client/register')
         .transform(vueify)
         .bundle()
@@ -24,14 +24,14 @@ gulp.task('vueify_register', () => {
 
 // Task: vueify
 // Transform and bundle .js and .vue files
-gulp.task('vueify_password', () => {
+gulp.task('vueify_password', function() {
     return browserify('./client/password')
         .transform(vueify)
         .bundle()
         .pipe(fs.createWriteStream('./public/dist/password_bundle.js'));
 });
 
-gulp.task('watch', () => {
+gulp.task('watch', function() {
     gulp.watch('./client/app/*.js', ['vueify_app']);
     gulp.watch('./client/app/*.vue', ['vueify_app']);
     gulp.watch('./client/register/*.js', ['vueify_register']);
