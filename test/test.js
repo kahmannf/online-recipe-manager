@@ -67,4 +67,24 @@ describe('User', function() {
             });
         });
     });
+
+    describe('#login()', function(){
+        it('Should verify email and password', function(){
+            var verifyuser = new user();
+            verifyuser.email = uuid();
+            verifyuser.login('test123', (err, status, loggedinuser) => {
+                assert.equal(status, 2, 'Userlogin returned status' + status + 'altough status 2 was expected\n'+ err);
+            });
+
+            verifyuser.email = 'felix@kahmann.de'
+
+            verifyuser.login('test321', (err, status, loggedinuser) => {
+                assert.equal(status, 3, 'Userlogin returned status' + status + 'altough status 3 was expected \n'+ err);
+            });
+
+            verifyuser.login('test123', (err, status, loggedinuser) => {
+                assert.equal(status, 0, 'Userlogin failed: '+ err);
+            });
+        })
+    });
 });
