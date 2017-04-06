@@ -9,6 +9,9 @@ module.exports = {
                 changeview: (v) => {
                     this.view = v;
                 },
+                loadcurrentuser: function(){
+                    this.loadcurrentuser();
+                },
             },
             view: 'home',
         }
@@ -18,18 +21,19 @@ module.exports = {
         app_body,
     },
     methods: {
-    },
-    mounted: function () {
-        var req = new XMLHttpRequest();
-        var path = '/user/current';
-        req.open("GET", path, true);
-        req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-        req.onreadystatechange = () => {
-            if (req.readyState === 4 && req.status == 200) {
-                this.appstate.user_loggedin = JSON.parse(req.responseText);
+        loadcurrentuser: function () {
+            var req = new XMLHttpRequest();
+            var path = '/user/current';
+            req.open("GET", path, true);
+            req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+            req.onreadystatechange = () => {
+                if (req.readyState === 4 && req.status == 200) {
+                    this.appstate.user_loggedin = JSON.parse(req.responseText);
+                }
             }
-        }
 
-        req.send();
-    }
+            req.send();
+        }
+    },
+    mounted: loadcurrentuser(),
 }

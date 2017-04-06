@@ -132,7 +132,7 @@ router.post('/login', (req, res) => {
         req.session.user_loggedin = loginuser;
         req.session.save((err) => { console.log(err); });
 
-        res.status(200).send(JSON.stringify(loginuser));
+        res.status(200).send('');
     });
 });
 

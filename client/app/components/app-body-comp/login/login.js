@@ -32,7 +32,7 @@ module.exports = {
             req.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
             req.onreadystatechange = () => {
                 if (req.readyState === 4 && req.status == 200) {
-                    this.appstate.user_loggedin = JSON.parse(req.responseText);
+                    this.appstate.loadcurrentuser();
                     this.appstate.changeview('home');
                 }
                 else if (req.readyState === 4 && req.status == 900) {
