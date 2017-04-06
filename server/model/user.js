@@ -372,6 +372,22 @@ user.prototype.login = function (password, callback) {
 }
 
 /**
+ * creates a new instance of this user-object which only contains information that can be exposed to the client
+ * @function
+ * @callback
+ */
+user.prototype.copyforclient = function(callback){
+    var result = new user();
+    result.guid = this.guid;
+    result.load((err, status, loadeduser) => {
+        if(err) {
+            callback(err, 1, undefined);
+            return;
+        }
+    });
+}
+
+/**
 * @callback user~validationRequest
 * @param {any} err error in case of non-sucessful execution
 * @param {bool} valid represent wheter the request was validated or not
@@ -384,5 +400,11 @@ user.prototype.login = function (password, callback) {
 * @param {number} errorCode error-code in case of non-sucessful execution
 * @param {user} user the updated user-object
 */
+
+/**
+ * @callback user~copyCallback
+ * @param {any} error 
+ * @param {user} copy 
+ */
 
 module.exports = user;

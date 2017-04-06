@@ -17,10 +17,13 @@ const recipe = function(){
     this.ingredients = [];
     /** @member {Array} array of steps */
     this.steps = [];
+    /** @member {user} user, that created the recipe */
+    this.creator
 }
 
 /**
  * Loads a recipe by the guid
+ * @function
  */
 recipe.prototype.load = () => {
     
