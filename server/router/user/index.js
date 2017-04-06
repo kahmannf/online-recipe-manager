@@ -83,15 +83,17 @@ router.get('/byregisterkey/:registerkey', (req, res) => {
 //
 router.get('/current', (req, res) => {
     if (req.session.user_loggedin && req.session.user_loggedin != null) {
-        var senduser = new user();
 
-        var loguser = req.session.user_loggedin;
+        req.session-user_loggedin.copyforclient((err, resultuser) => {
+            if(err){
+                res.status(500).send();
+                return;
+            }
 
-        senduser.alias = loguser.alias;
-        senduser.email = loguser.email;
+            res.status(200).send(JSON.stringify(resultuser));
+            return;
 
-        res.status(200).send(JSON.stringify(senduser));
-        return;
+        });
     }
     else {
         res.status(400).send();
