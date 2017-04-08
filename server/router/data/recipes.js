@@ -2,6 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 
+const config = require('../../config');
+
 
 
 
@@ -12,8 +14,18 @@ const router = express.Router();
 //  400     Bad request: Insufficent reciperequest data/invalid reciperequest
 //
 router.get('/', (req, res) => {
-    if(!req.body){
-        res.status(400).send('no reciperequest provided');
+    try {
+        if(!req.body){
+            res.status(400).send('no reciperequest provided');
+            return;
+        }
+
+        //assume that req.body is a reciperequest
+        
+
+    }
+    catch(e){
+        res.status(500).send(config.server.client_error_notification == 1 ? e : '');
         return;
     }
 });
