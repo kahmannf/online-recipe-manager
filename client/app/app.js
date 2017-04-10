@@ -10,7 +10,7 @@ module.exports = {
                     this.view = v;
                 },
                 loadcurrentuser: function(){
-                    this.loadcurrentuser();
+                    this.loadcuruser();
                 },
             },
             view: 'home',
@@ -21,7 +21,7 @@ module.exports = {
         app_body,
     },
     methods: {
-        loadcurrentuser: function () {
+        loadcuruser: function () {
             var req = new XMLHttpRequest();
             var path = '/user/current';
             req.open("GET", path, true);
@@ -35,5 +35,7 @@ module.exports = {
             req.send();
         }
     },
-    mounted: this.appstate.loadcurrentuser(),
+    mounted() {
+         appstate.loadcurrentuser();
+    },
 }
