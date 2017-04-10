@@ -35,5 +35,5 @@ module.exports = {
             req.send();
         }
     },
-    mounted: loadcurrentuser(),
+    mounted: this.appstate.loadcurrentuser(),
 }
