@@ -384,6 +384,10 @@ user.prototype.copyforclient = function(callback){
             callback(err, 1, undefined);
             return;
         }
+
+        loadeduser.guid = null;
+
+        callback(undefined, 0, loadeduser);
     });
 }
 

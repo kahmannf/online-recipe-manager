@@ -82,7 +82,10 @@ router.get('/byregisterkey/:registerkey', (req, res) => {
 router.get('/current', (req, res) => {
     if (req.session.user_loggedin && req.session.user_loggedin != null) {
 
-        req.session-user_loggedin.copyforclient((err, resultuser) => {
+        var clientuser = new user();
+        clientuser.guid = req.session.user_loggedin.guid;
+
+        clientuser.copyforclient((err, status ,resultuser) => {
             if(err){
                 res.status(500).send();
                 return;
@@ -130,7 +133,11 @@ router.post('/login', (req, res) => {
         }
         
         req.session.user_loggedin = loginuser;
-        req.session.save((err) => { console.log(err); });
+        req.session.save((err) => {
+            if (err) {
+                console.log(err);
+            }
+        });
 
         res.status(200).send('');
     });

@@ -5,6 +5,7 @@
         </div>
         <div class="column column-4">
             <login_control :appstate="appstate" v-if="view == 'login'"></login_control>
+            <home :appstate="appstate" v-if="view == 'home'"></home>
             <p v-else>
                 {{ 'view "' + (view || undefined) + '" is not yet implemented.'}}
                 <br/>

@@ -7,7 +7,7 @@ const data = require('./data');
 
 router.use('/user', user)
 
-router.get('/recipes', data.recipes);
+router.use('/recipes', data.recipes);
 
 router.get('/', (req, res) => { res.status(404).send('Nothing here to see...') });
 

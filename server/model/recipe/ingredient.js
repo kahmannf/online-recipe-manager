@@ -1,7 +1,7 @@
 'use strict';
 const uuid = require('uuid/v4');
-const db = require('../db');
-const config = require('../config');
+const db = require('../../db');
+const config = require('../../config');
 
 
 /**

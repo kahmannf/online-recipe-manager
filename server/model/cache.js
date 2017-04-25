@@ -40,8 +40,11 @@ const cache = function(){
  */
 cache.prototype.add = function (id, item, callback) {
     try {
-        if(this.map.has(id)) {
-            callback('The item already exists  in the cache', undefined);
+        if (this.map.has(id)) {
+            var citem = this.map.get(id);
+            citem.item = item;
+            this.map.set(id, citem);
+            callback(undefined, citem);
             return;
         }
         else {
@@ -94,4 +97,4 @@ cache.prototype.getifhas = function (id, callback) {
  */
 
 
-module.exports = { cache }
+module.exports = cache;

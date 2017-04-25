@@ -9,7 +9,7 @@ module.exports = {
                 changeview: (v) => {
                     this.view = v;
                 },
-                loadcurrentuser: function(){
+                loadcurrentuser: () => {
                     this.loadcuruser();
                 },
             },
@@ -31,11 +31,14 @@ module.exports = {
                     this.appstate.user_loggedin = JSON.parse(req.responseText);
                 }
             }
-
-            req.send();
+            try {
+                req.send();
+            }
+            catch (err) {
+            }
         }
     },
     mounted() {
-         appstate.loadcurrentuser();
+        this.loadcuruser();
     },
 }
